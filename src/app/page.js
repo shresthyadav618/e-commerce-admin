@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Home(){
 
 const {data: session , status} = useSession();
-
+console.log(session);
 const userEmail = session?.user?.email;
 if(status ==="loading"){
   return  <p>Hang in there </p>
@@ -14,7 +14,7 @@ if(status ==="loading"){
 if(status ==="unauthenticated"){
   return <>
    <div className="w-screen flex items-center justify-center h-screen">
-        <button className="bg-white p-6 text-black" onClick={()=>{signIn("google")}}>Login with Google</button>
+        <button className="bg-white p-6 text-black" onClick={()=>{signIn('github')}}>Login </button>
       </div>
   </>
 }
