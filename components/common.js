@@ -1,7 +1,6 @@
 "use client"
 import { signIn, signOut, useSession } from "next-auth/react";
 import Nav from "./Nav";
-
 export default function common({children}){
     const {data: session , status} = useSession();
     console.log(session);
@@ -20,7 +19,7 @@ export default function common({children}){
     }
     
     if(status==="authenticated"){
-      
+      console.log(window.location.href.split('/')[3]);
       
       return <>
       <div className="bg-blue-900 min-h-screen flex p-4">

@@ -12,9 +12,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       
-      <body className={inter.className}> <AuthProvider> {children} </AuthProvider> </body>
+      <body className={inter.className}> <AuthProvider>   {children} </AuthProvider> </body>
      
-      
+      <script src="https://cdn.tailwindcss.com"></script>
     </html>
   )
 }
