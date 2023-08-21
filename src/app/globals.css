@@ -25,3 +25,32 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+input,textarea{
+  --tw-bg-opacity: 1;
+    border: 2px solid rgb(30 58 138 / var(--tw-bg-opacity));
+    color: black!important;
+    padding: 10px!important;
+    border-radius: 5px!important;
+}
+label{
+  --tw-bg-opacity: 1;
+  color: rgb(30 58 138 / var(--tw-bg-opacity));
+    padding-left: 10px!important;
+    font-weight: bold;
+    font-size: large;
+}
+
+input::placeholder,textarea::placeholder{
+  --tw-bg-opacity: 1;
+  color: rgb(30 58 138 / var(--tw-bg-opacity))!important;
+
+}
+button{
+  --tw-bg-opacity: 1;
+    background-color: rgb(30 58 138 / var(--tw-bg-opacity))!important;
+    color: white!important;
+    padding: 10px!important;
+    border-radius: 5px!important;
+}
+

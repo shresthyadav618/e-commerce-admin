@@ -8,7 +8,7 @@ export default function page(){
     return(
 <Common> 
 
-<Link href={'/products/new'} className="bg-blue-900 text-white p-4 rounded-xl">Add New Button</Link>
+<Link href={'/products/new'} className="bg-blue-900 text-white p-4 rounded-xl">Add New Product</Link>
     
 </Common>
     )
