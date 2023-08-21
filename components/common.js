@@ -1,5 +1,5 @@
 "use client"
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Nav from "./Nav";
 export default function common({children}){
     const {data: session , status} = useSession();
@@ -28,7 +28,7 @@ export default function common({children}){
       <p>
         {children}
       </p>
-      <button onClick={()=>{signOut()}}>Sign Out</button>
+      {/* <button onClick={()=>{signOut()}}>Sign Out</button> */}
       </div>
       </div>
       </>
