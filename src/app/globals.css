@@ -46,11 +46,21 @@ input::placeholder,textarea::placeholder{
   color: rgb(30 58 138 / var(--tw-bg-opacity))!important;
 
 }
-button{
+button,.btn{
   --tw-bg-opacity: 1;
     background-color: rgb(30 58 138 / var(--tw-bg-opacity))!important;
     color: white!important;
     padding: 10px!important;
     border-radius: 5px!important;
+    width: fit-content;
 }
-
+.basic tr td{
+  border: 1px solid black;
+  padding: 5px;
+}
+.basic thead{
+  background-color: antiquewhite;
+  color: black;
+  padding: 5px;
+  width: 100%;
+}
