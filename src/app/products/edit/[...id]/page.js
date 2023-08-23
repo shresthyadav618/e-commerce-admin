@@ -6,7 +6,10 @@ import ProductForm from "../../../../../components/productForm";
 export default function page(){
 const pathname = usePathname().split('/')[3].toString();
 const [product,changeProduct] = useState(null);
-console.log(product)
+console.log(product);
+
+
+
 useEffect(()=>{
 
 async function getProduct(){
