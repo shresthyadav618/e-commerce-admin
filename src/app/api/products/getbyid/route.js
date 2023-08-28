@@ -11,7 +11,7 @@ export async function POST(NextRequest){
         if(product){
             console.log(product);
             return NextResponse.json({
-                stauts : 200,
+                status : 200,
                 product
             })
         }else{

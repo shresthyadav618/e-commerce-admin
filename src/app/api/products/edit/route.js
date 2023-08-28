@@ -4,15 +4,16 @@ export async function PUT(NextRequest){
     try{
         const reqBody = await NextRequest.json();
     console.log(reqBody);
-    const {name,desc,price,_id} = reqBody;
+    const {name,desc,price,_id,images} = reqBody;
 
-    console.log('inside edit',name,desc,price,_id);
+    console.log('inside edit',name,desc,price,_id,images);
     const product = await productModel.findById(_id);
     if(product){
         const updatedProduct = await product.updateOne({
             name : name,
             desc : desc,
-            price : price
+            price : price,
+            images : images
         });
         console.log('updated product is :',updatedProduct);
         if(updatedProduct){

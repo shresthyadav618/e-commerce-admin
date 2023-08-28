@@ -7,13 +7,14 @@ connect();
 export async function POST(NextRequest){
     try{
         const reqBody = await NextRequest.json();
-    const {name,desc,price} = reqBody;
-    console.log(name,desc,price);
+    const {name,desc,price,images} = reqBody;
+    console.log(name,desc,price,images);
     
     const newProduct = await new productModel({
         name : name,
         desc : desc,
-        price: price
+        price: price,
+        images : images
     });
 
     const savedProduct = await newProduct.save();

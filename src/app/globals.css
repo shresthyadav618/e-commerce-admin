@@ -64,3 +64,16 @@ button,.btn{
   padding: 5px;
   width: 100%;
 }
+.uploaded__images > img{
+  width: 60px;
+  object-fit: contain;
+  height: 60px;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+}
+.uploaded__images{
+  margin-left: 10px;
+  display: flex;
+  column-gap: 10px;
+}

@@ -10,8 +10,9 @@ const [data,changeData] = useState({
     name : name || "",
     desc : desc || "",
     price: price || "",
-    images : images || ""
+    images :  images || []
 }) ;
+console.log(data);
 async function handleSubmit(e){
     e.preventDefault();
     console.log(data);
@@ -61,17 +62,31 @@ console.log(e);
 const files = e.target?.files;
 console.log(files);
 if(files?.length>0){
- const data = new FormData();
+ const dataForm = new FormData();
  for(const file of files){
-    data.append('file',file);
+    dataForm.append('file',file);
  }
  const response = await fetch('http://localhost:3000/api/upload',{
     method : 'POST',
-    body : data
+    body : dataForm
  });
- console.log(response);
+ console.log('the response is : ',response);
  const bodyResponse = await response.json();
+ console.log('the json response is : ',bodyResponse);
+ console.log(data.images);
+ const newImages = data.images? data.images: [];
+ newImages.push(bodyResponse[0]);
+ console.log('the new images are : ',newImages);
+ 
+ changeData((prev)=>{
+    
+    
+    return {
+        ...prev , images : newImages
+    }
+ })
  console.log(bodyResponse);
+ console.log('the updated data is : ',data);
 }else{
     console.log('No file found')
 }
@@ -90,8 +105,11 @@ return (<Common>
 Upload
 <input onChange={(e)=>{uploadImages(e)}} type="file" className="hidden"></input>
 </label>
+
    <div>
-    {images ? <div></div> : <div className="p-2">No photos for this product</div>}
+    {data.images.length>0 ? <div className="uploaded__images">{data.images.map((imageContent)=>{
+        return <img src={imageContent} width={'60px'} height={'60px'}></img>
+    })}</div> : <div className="p-2">No photos for this product</div>}
    </div>
    
    <label htmlFor="desc">Description</label>

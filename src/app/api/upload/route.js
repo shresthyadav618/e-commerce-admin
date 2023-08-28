@@ -1,5 +1,7 @@
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { IncomingForm } from 'formidable';
-import { writeFile } from 'fs/promises';
+import fs from "fs";
+import mime from "mime-types";
 import { NextResponse } from 'next/server';
 import { join } from 'path';
 export async function POST(NextRequest) {
@@ -12,14 +14,42 @@ export async function POST(NextRequest) {
     console.log("form-data",file,formData);
     
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
+    // const bytes = await file.arrayBuffer();
+    // console.log(bytes);
+    // file.arrayBuffer().then((buffer)=>{
+    //   console.log('buffer is : ',buffer);
+    // })
+    // const buffer = Buffer.from(bytes);
+    // console.log('new buffer is : ',buffer);
     const path = join('/','tmp',file.name);
-    await writeFile(path,buffer);
-    console.log(`open ${path} to see the file`)
+    // await writeFile(path,buffer);
+    // console.log(`open ${path} to see the file`);
+    // console.log('the file.path is equal to : ',file.path);
 
-    return NextResponse.json({status : 200,msg: 'this is right'})
+    const ext = file.name.split('.')[1];
+    const newFilename = Date.now() + '.' + ext;
+    // console.log('the ext and newFileName is : ',ext,' and ',newFilename);
+    // console.log(process.env.S3_ACCESS_KEY,process.env.S3_SECRET_KEY);
+    const links = [];
+    const client = new S3Client({
+      region : 'eu-north-1',
+      credentials : {
+        accessKeyId : process.env.S3_ACCESS_KEY,
+        secretAccessKey : process.env.S3_SECRET_KEY 
+      }
+    });
+    await client.send(new PutObjectCommand({
+      Bucket : 'manu-ecommerce-admin',
+      Key: newFilename,
+      Body: fs.readFileSync(path),
+      ACL: 'public-read',
+      ContentType: mime.lookup(path),
+
+    }));
+    const link = `https://manu-ecommerce-admin.s3.amazonaws.com/${newFilename}`;
+    links.push(link);
+    console.log(link,links);
+    return NextResponse.json(links);
   } catch (err) {
     console.error(err);
     return NextResponse.json({
