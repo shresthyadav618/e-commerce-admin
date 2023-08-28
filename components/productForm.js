@@ -1,6 +1,8 @@
 "use client"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { ReactSortable } from "react-sortablejs";
+import { PuffLoader } from "react-spinners";
 import Common from "../components/common";
 
 export default function ProductForm({name,desc,price,check,_id,images}){
@@ -13,6 +15,7 @@ const [data,changeData] = useState({
     images :  images || []
 }) ;
 console.log(data);
+const [loading,setLoading] = useState(false);
 async function handleSubmit(e){
     e.preventDefault();
     console.log(data);
@@ -58,6 +61,7 @@ async function handleSubmit(e){
 }
 
 async function uploadImages(e){
+setLoading(true);
 console.log(e);
 const files = e.target?.files;
 console.log(files);
@@ -87,11 +91,19 @@ if(files?.length>0){
  })
  console.log(bodyResponse);
  console.log('the updated data is : ',data);
+
 }else{
     console.log('No file found')
 }
+setLoading(false);
 }
-
+function updateImagesOrder(){
+    console.log(arguments[0]);
+    changeData((prev)=>{
+        return {...prev, images : arguments[0]}
+    })
+}
+console.log('THE VALUE OF DATA.IMAGES' , data.images)
 return (<Common>
    <form className="flex flex-col w-[25%] gap-y-4">
    {check ?  <div className="p-[10px]">Edit Product</div>: <div className="p-[10px]">New Product</div>}
@@ -106,11 +118,19 @@ Upload
 <input onChange={(e)=>{uploadImages(e)}} type="file" className="hidden"></input>
 </label>
 
-   <div>
-    {data.images.length>0 ? <div className="uploaded__images">{data.images.map((imageContent)=>{
-        return <img src={imageContent} width={'60px'} height={'60px'}></img>
-    })}</div> : <div className="p-2">No photos for this product</div>}
+   <div className="relative">
+    {loading && <div className="p-2">
+   <PuffLoader color="#36d7b7"  />
+   </div>}
+   <div className="uploaded__images">
+   <ReactSortable list={data.images} setList={updateImagesOrder}>
+    {data.images.length>0 && data.images.map((imageContent)=>{
+        return  <img src={imageContent} width={'60px'} height={'60px'}></img> 
+      })      }
+    </ReactSortable>
+    </div>
    </div>
+   
    
    <label htmlFor="desc">Description</label>
    <textarea value={data.desc} onChange={(e)=>{changeData((prev)=>{return {...prev,desc : e.target.value}})}} placeholder="Description" name="desc" ></textarea>
