@@ -101,14 +101,20 @@ async function handleDelete(cat){
 
     }
 }
-
+const [properties,setProperties] = useState([]);
+async function createProperty(){
+setProperties((prev)=>{
+    return [ ...prev , {name : '' , value : ''}]
+})
+}
 return (
 <Common>
     
     <form className="flex flex-col w-[35%] gap-y-4" >
     <h1 className="ml-3 font-bold text-blue-900 text-xl">Categories</h1>
         <label htmlFor="categories_name">{editing ? `Edit ${name} Category` : 'Create A New Category'}</label>
-        <div className="flex gap-x-4">
+        <div className="flex flex-col gap-y-4">
+            <div className="flex gap-x-2">
         <input onChange={(e)=>{
             setName(e.target.value)
         }} value={name} name="categories_name" placeholder="enter the categories"></input>
@@ -120,6 +126,20 @@ return (
                 return <option value={cat._id}>{cat.name}</option>
             })}
         </select>
+        </div>
+
+        <div className="flex flex-col gap-y-4">
+        <label>Properties</label>
+        <button type="button" onClick={createProperty}>Add New Property</button>
+        {properties && properties.map((prop)=>{
+            return <>
+            <div className="flex gap-x-2">
+            <input placeholder="Enter the name (ex-> color)"></input>
+            <input placeholder="Enter the value (ex-> color value )"></input>
+            </div>
+            </>
+        })}
+        </div>
         {editing ? <button type="click" onClick={(e)=>{handleEditSubmit(e)}}>Edit</button>  : <button type="click" onClick={(e)=>{handleSave(e)}}>Save</button>}
         </div> 
     </form>

@@ -129,7 +129,7 @@ function updateImagesOrder(){
 }
 console.log('THE VALUE OF DATA.IMAGES' , data.images)
 return (<Common>
-   <form className="flex flex-col w-[25%] gap-y-4">
+   <form className="flex flex-col w-[60%] gap-y-4">
    {check ?  <div className="p-[10px]">Edit Product</div>: <div className="p-[10px]">New Product</div>}
     <label  htmlFor="name">Product Name</label>
    <input value={data.name} onChange={(e)=>{changeData((prev)=>{return {...prev,name : e.target.value}})}} placeholder="Product Name" name="name"></input>
@@ -163,7 +163,7 @@ Upload
    
    
    <label htmlFor="desc">Description</label>
-   <textarea value={data.desc} onChange={(e)=>{changeData((prev)=>{return {...prev,desc : e.target.value}})}} placeholder="Description" name="desc" ></textarea>
+   <textarea value={data.desc} rows={'40'} onChange={(e)=>{changeData((prev)=>{return {...prev,desc : e.target.value}})}} placeholder="Description" name="desc" ></textarea>
    <label htmlFor="price">Price (in RS)</label>
    <input value={data.price} onChange={(e)=>{changeData((prev)=>{return {...prev,price : e.target.value}})}} placeholder="Price" name="price"></input>
    

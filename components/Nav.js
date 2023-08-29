@@ -2,13 +2,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 export default function useNav() {
     const activeLink = 'bg-white text-blue-900 pr-0 ';
-    const defaultCss = 'flex p-4'
+    const defaultCss = 'flex p-4 text-white'
     const path = usePathname();
     
     console.log(path)
   return (
     <aside>
-      <Link href={'/'} className={  path=='/'?activeLink + defaultCss: defaultCss}>
+      <Link href={'/'} className={  path=='/'?defaultCss + activeLink: defaultCss}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={"20px"}
