@@ -4,6 +4,7 @@ import Common from "../../../components/common";
 
 export default function page(){
 const [name,setName] = useState(null);
+const [parentCategory , setParentCategory] = useState('');
 const [categories,setCategories] = useState(null);
 const [render,changeRender] = useState(false);
 useEffect(()=>{
@@ -36,7 +37,7 @@ console.log(name);
 const data = await fetch('http://localhost:3000/api/categories',{
     method : 'POST',
     headers : {'Content-Type': 'application/json'},
-    body : JSON.stringify({name : name})
+    body : JSON.stringify({name : name , parentCategory})
 })
 
 if(data.ok){
@@ -64,16 +65,26 @@ return (
         <input onChange={(e)=>{
             setName(e.target.value)
         }} value={name} name="categories_name" placeholder="enter the categories"></input>
+        <select onChange={(e)=>{
+            setParentCategory(e.target.value);
+        }}>
+            <option value={''} >Parent Category</option>
+            {categories && categories.map((cat)=>{
+                return <option value={cat._id}>{cat.name}</option>
+            })}
+        </select>
         <button type="submit">Save</button>
         </div>
     </form>
     <table className="basic mt-6 w-full ">
         <thead>
-            <tr><td>Categories</td></tr>
+            <tr><td>Categories</td> <td>Parent Category</td> <td>Operations</td> </tr>
+            
         </thead>
         {categories && categories.map((cat)=>{
-            return <tr><td>{cat.name}</td></tr>
+            return <tr><td>{cat.name}</td> <td>{cat?.parent?.name}</td> <td><button>Edit</button> <button>Delete</button></td>  </tr>
         })}
+
     </table>
 </Common>
 )

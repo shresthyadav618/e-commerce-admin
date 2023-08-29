@@ -3,6 +3,11 @@ const categoriesSchema = mongoose.Schema({
     name : {
         type : String,
         required : true
+    },
+    parent : {
+        type : mongoose.Types.ObjectId,
+        required : false,
+        ref : 'categories'
     }
 });
 

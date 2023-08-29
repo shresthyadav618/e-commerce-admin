@@ -1,16 +1,19 @@
 import { categoriesModel } from "@/models/categories";
 import { NextResponse } from "next/server";
+import { connect } from "../../../dbConfig/dbConfig";
 const handler = async(NextRequest)=>{
-    console.log('the method is : ',NextRequest.method)
+    console.log('the method is : ',NextRequest.method);
+    connect();
     if(NextRequest.method==='POST'){
         try{
             console.log('inside the api route handler');
     const reqBody = await NextRequest.json();
     console.log(reqBody);
-    const {name} = reqBody;
-    
+    const {name,parentCategory} = reqBody;
+    console.log('the parent category is : ',parentCategory);
     const newCategory = await new categoriesModel({
-        name : name
+        name : name,
+        parent : parentCategory
     });
     await newCategory.save();
     
@@ -29,7 +32,7 @@ const handler = async(NextRequest)=>{
 
     if(NextRequest.method === 'GET'){
         console.log('inside the get request');
-        const categories = await categoriesModel.find({});
+        const categories = await categoriesModel.find({}).populate('parent');
         if(categories){
             console.log('the categories are found',categories);
             return NextResponse.json({
