@@ -14,6 +14,8 @@ const response = await fetch('http://localhost:3000/api/products',{
     method : 'GET'
 });
 
+
+
 if(response.ok){
 const details = await response.json();
 console.log(details);

@@ -84,6 +84,24 @@ async function handleSubmit(e){
     }
 }
 
+let propertyToFill = [];
+if(ParentCategory && categories){
+    
+    const parentCat = categories.filter((element)=>  element._id === ParentCategory);
+    console.log('found the parent category',parentCat[0]);
+    // propertyToFill.push(...parentCat[0].properties);
+    // console.log(propertyToFill);
+    let catInfo = parentCat;
+    while(catInfo && catInfo?.length > 0 && catInfo[0].properties){
+        console.log('THE PROPERTIES VALUE INSIDE CATINFO IS : ',...catInfo[0].properties)
+        propertyToFill.push(...catInfo[0]?.properties);
+        console.log('the category info is : ',catInfo[0]);
+        // console.log('the value is : ',...catInfo.properties);
+        console.log(propertyToFill);
+        catInfo = categories.filter((element)=>element._id === catInfo[0]?.parent?._id )
+    }    
+}
+console.log('THE FINAL PROPERTY ARRAY IS : ',propertyToFill);
 async function uploadImages(e){
 setLoading(true);
 console.log(e);
@@ -136,10 +154,14 @@ return (<Common>
    
    <label>Category</label>
    <select onChange={(e)=>{
+    console.log('TRYING TO CHANGE PARENT CATEGORY',e.target.value)
     setParentCategory(()=>{return e.target.value})
    }} value={ParentCategory}><option value={''}>Uncategorized</option> {categories && categories.map((cat)=>{
     return <option value={cat._id}>{cat.name}</option>
    })} </select>
+   {propertyToFill && propertyToFill.map((elm)=>{
+    return <div className="flex gap-x-2 ml-2"> <div>{elm.name}</div> <div>{elm.value}</div> </div>
+   })}
    <label htmlFor="photos">Photos</label>
    <label className="ml-2 btn font-normal cursor-pointer flex flex-col items-center justify-center gap-y-2" > <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
   <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />

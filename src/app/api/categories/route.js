@@ -9,11 +9,12 @@ const handler = async(NextRequest)=>{
             console.log('inside the api route handler');
     const reqBody = await NextRequest.json();
     console.log(reqBody);
-    const {name,parentCategory} = reqBody;
+    const {name,parentCategory,properties} = reqBody;
     console.log('the parent category is : ',parentCategory);
     const newCategory = await new categoriesModel({
         name : name,
-        parent : parentCategory===''? null : parentCategory
+        parent : parentCategory===''? null : parentCategory ,
+        properties : properties
     });
     await newCategory.save();
     
@@ -51,15 +52,16 @@ const handler = async(NextRequest)=>{
     if(NextRequest.method ==='PUT'){
         console.log('inside the put request');
         const reqBody = await NextRequest.json();
-        const {_id , name , parentCategory} = reqBody;
-        console.log('the id is : ',_id , 'and name & parent',name,parentCategory);
+        const {_id , name , parentCategory , properties} = reqBody;
+        console.log('the id is : ',_id , 'and name & parent',name,parentCategory,properties);
 
         const category = await categoriesModel.findById(_id);
         if(category){
             console.log('found the category by id',category);
             const updatedCategory = await category.updateOne({
                 name : name,
-                parent : parentCategory ===''? null : parentCategory
+                parent : parentCategory ===''? null : parentCategory,
+                properties : properties === null ? [] : properties
             });
             // await updatedCategory.save();
             return NextResponse.json({

@@ -1,8 +1,8 @@
 'use client'
 import { useEffect, useState } from "react";
 import Common from "../../../components/common";
-
 export default function page(){
+
 const [name,setName] = useState(null);
 const [editing,setEditing] = useState(null);
 const [parentCategory , setParentCategory] = useState('');
@@ -21,6 +21,7 @@ useEffect(()=>{
             setCategories(()=>{
                 return resJson.categories;
             });
+            
         }else{
             const resError = await data.json();
             console.log('some error receving the data',resError);
@@ -38,7 +39,7 @@ console.log(name);
 const data = await fetch('http://localhost:3000/api/categories',{
     method : 'POST',
     headers : {'Content-Type': 'application/json'},
-    body : JSON.stringify({name : name , parentCategory})
+    body : JSON.stringify({name : name , parentCategory , properties})
 })
 
 if(data.ok){
@@ -46,6 +47,8 @@ if(data.ok){
     console.log('the response back is : ',resJson);
     alert('saved the category');
     setName('');
+    setParentCategory('');
+    setProperties([]);
 }else{
     const resError = await data.json();
     console.log('the error from the api received is',resError);
@@ -59,15 +62,27 @@ changeRender((prev)=>{
 async function handleEdit(cat){
     setName(cat.name);
     console.log('the parent cat id : ',cat.parent?._id)
-    setParentCategory(cat.parent?._id);
-    setEditing(cat)
+    setParentCategory(cat.parent?._id || '');
+    setEditing(cat);
+    setProperties(()=>{
+        return cat?.properties.map((p)=>{
+            return {name : p.name , value : typeof(p.value) === Object ? p.value?.join(',') : p.value }
+        }) || [];
+    })
+    
+
 }
 
 async function handleEditSubmit(e){
     e.preventDefault();
     const data = await fetch('http://localhost:3000/api/categories',{
         method : 'PUT',
-        body : JSON.stringify({_id : editing._id , name , parentCategory}),
+        body : JSON.stringify({_id : editing._id , name , parentCategory, properties : properties.map((p)=>{
+            return {
+                name : p.name,
+                value : p.value?.split(',') || p.value
+            }
+        })}),
         headers : {'Content-Type':'application/json'}
     });
 
@@ -80,7 +95,10 @@ async function handleEditSubmit(e){
     }
     changeRender((prev)=>{
         return !prev;
-    })
+    });
+    setName(()=>'');
+    setParentCategory(()=>'');
+    setProperties(()=>[]);
 }
 
 async function handleDelete(cat){
@@ -107,6 +125,39 @@ setProperties((prev)=>{
     return [ ...prev , {name : '' , value : ''}]
 })
 }
+
+function handlePropertyNameChange(e,idx){
+    const newValue = e.target.value;
+    setProperties((prev)=>{
+        const prevProperties = [...prev];
+        prevProperties[idx].name = newValue;
+        return prevProperties;
+    })
+}
+function handlePropertyValueChange(e,idx){
+    const newValue = e.target.value;
+    setProperties((prev)=>{
+        const prevProperties = [...prev];
+        prevProperties[idx].value = newValue;
+        return prevProperties;
+    })
+}
+console.log(properties);
+
+function handleRemoveProperty(index){
+    setProperties((prev)=>{
+        const prevProperty = [...prev];
+        const newProperty = prevProperty.filter((property,idx)=>{
+            if(idx!==index){
+                return property;
+            }
+        });
+        if(newProperty==null){
+            return [];
+        }return newProperty;
+    })
+}
+
 return (
 <Common>
     
@@ -131,16 +182,23 @@ return (
         <div className="flex flex-col gap-y-4">
         <label>Properties</label>
         <button type="button" onClick={createProperty}>Add New Property</button>
-        {properties && properties.map((prop)=>{
+        {properties && properties.map((prop,idx)=>{
             return <>
-            <div className="flex gap-x-2">
-            <input placeholder="Enter the name (ex-> color)"></input>
-            <input placeholder="Enter the value (ex-> color value )"></input>
+            <div className="flex gap-x-2  ">
+            <input placeholder="Enter the name (ex-> color)" value={prop.name} onChange={(e)=>{handlePropertyNameChange(e,idx)}} ></input>
+            <input placeholder="Enter the value (ex-> color value )" value={prop.value} onChange={(e)=>{handlePropertyValueChange(e,idx)}}></input>
+            <button onClick={()=>{handleRemoveProperty(idx)}} type="button">Remove</button>
             </div>
             </>
         })}
         </div>
-        {editing ? <button type="click" onClick={(e)=>{handleEditSubmit(e)}}>Edit</button>  : <button type="click" onClick={(e)=>{handleSave(e)}}>Save</button>}
+        {editing ? <div className="flex gap-x-2"> <button type="button" onClick={(e)=>{
+            e.preventDefault();
+            setEditing(()=>false);
+            setProperties(()=>[]);
+            setName(()=>'');
+            setParentCategory(()=>'');
+        }}>Cancel</button>  <button type="button" onClick={(e)=>{handleEditSubmit(e)}}>Edit</button> </div>  : <button type="click" onClick={(e)=>{handleSave(e)}}>Save</button>}
         </div> 
     </form>
     <table className="basic mt-6 w-full ">
