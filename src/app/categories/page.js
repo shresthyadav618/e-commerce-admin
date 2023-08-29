@@ -1,9 +1,33 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Common from "../../../components/common";
 
 export default function page(){
 const [name,setName] = useState(null);
+const [categories,setCategories] = useState(null);
+const [render,changeRender] = useState(false);
+useEffect(()=>{
+    async function getCategories(){
+        const data  = await fetch('http://localhost:3000/api/categories',{
+            method : 'GET'
+        });
+
+        if(data.ok){
+            console.log('recevied the ok data');
+            const resJson = await data.json();
+            console.log('the json recevived is  : ',resJson);
+            setCategories(()=>{
+                return resJson.categories;
+            });
+        }else{
+            const resError = await data.json();
+            console.log('some error receving the data',resError);
+        }
+    }
+
+    getCategories();
+    
+},[render])
 
 async function handleSave(e){
 e.preventDefault();
@@ -18,11 +42,16 @@ const data = await fetch('http://localhost:3000/api/categories',{
 if(data.ok){
     const resJson = await data.json();
     console.log('the response back is : ',resJson);
+    alert('saved the category');
+    setName('');
 }else{
     const resError = await data.json();
     console.log('the error from the api received is',resError);
 }
 
+changeRender((prev)=>{
+    return !prev;
+})
 }
 
 return (
@@ -38,6 +67,14 @@ return (
         <button type="submit">Save</button>
         </div>
     </form>
+    <table className="basic mt-6 w-full ">
+        <thead>
+            <tr><td>Categories</td></tr>
+        </thead>
+        {categories && categories.map((cat)=>{
+            return <tr><td>{cat.name}</td></tr>
+        })}
+    </table>
 </Common>
 )
 
