@@ -13,7 +13,7 @@ const handler = async(NextRequest)=>{
     console.log('the parent category is : ',parentCategory);
     const newCategory = await new categoriesModel({
         name : name,
-        parent : parentCategory
+        parent : parentCategory===''? null : parentCategory
     });
     await newCategory.save();
     
@@ -47,7 +47,38 @@ const handler = async(NextRequest)=>{
             })
         }
     }
+
+    if(NextRequest.method ==='PUT'){
+        console.log('inside the put request');
+        const reqBody = await NextRequest.json();
+        const {_id , name , parentCategory} = reqBody;
+        console.log('the id is : ',_id , 'and name & parent',name,parentCategory);
+
+        const category = await categoriesModel.findById(_id);
+        if(category){
+            console.log('found the category by id',category);
+            const updatedCategory = await category.updateOne({
+                name : name,
+                parent : parentCategory ===''? null : parentCategory
+            });
+            // await updatedCategory.save();
+            return NextResponse.json({
+                status : 200,
+                updatedCategory
+            })
+        }else{
+            console.log('unable to find the category');
+            return NextResponse.json({
+                status : 500,
+                error : 'there was some error while finding the category'
+            })
+        }
+
+    }
+
+    
 }
 
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST, handler as PUT };
+
