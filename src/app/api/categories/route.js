@@ -1,3 +1,4 @@
+import { categoriesModel } from "@/models/categories";
 import { NextResponse } from "next/server";
 export async function POST(NextRequest){
 
@@ -7,10 +8,15 @@ const reqBody = await NextRequest.json();
 console.log(reqBody);
 const {name} = reqBody;
 
-console.log('the name received is : ',name);
+const newCategory = await new categoriesModel({
+    name : name
+});
+await newCategory.save();
+
+console.log('the new category is saved : ',newCategory);
 return NextResponse.json({
     status: 200,
-    name
+    newCategory
 });
     }catch(error){
 return NextResponse.json({
