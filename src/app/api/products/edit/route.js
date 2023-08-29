@@ -4,7 +4,7 @@ export async function PUT(NextRequest){
     try{
         const reqBody = await NextRequest.json();
     console.log(reqBody);
-    const {name,desc,price,_id,images} = reqBody;
+    const {name,desc,price,_id,images,parentCategory} = reqBody;
 
     console.log('inside edit',name,desc,price,_id,images);
     const product = await productModel.findById(_id);
@@ -13,7 +13,8 @@ export async function PUT(NextRequest){
             name : name,
             desc : desc,
             price : price,
-            images : images
+            images : images,
+            parentCategory : parentCategory === '' ? null : parentCategory
         });
         console.log('updated product is :',updatedProduct);
         if(updatedProduct){

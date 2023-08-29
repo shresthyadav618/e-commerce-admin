@@ -20,6 +20,11 @@ const productSchema = mongoose.Schema({
     images : {
         type : Object,
         required : false
+    },
+    parentCategory : {
+        type : mongoose.Types.ObjectId,
+        required : false,
+        ref : 'categories'
     }
 
 });

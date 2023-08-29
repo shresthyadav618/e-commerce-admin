@@ -7,7 +7,7 @@ export async function POST(NextRequest){
         const reqBody = await NextRequest.json();
         console.log(reqBody);
         const {_id} = reqBody;
-        const product = await productModel.findById(_id);
+        const product = await productModel.findById(_id).populate('parentCategory');
         if(product){
             console.log(product);
             return NextResponse.json({

@@ -7,7 +7,7 @@ connect();
 export  async function GET(NextRequest){
 
 try{
-    const productsExists = await productModel.find({});
+    const productsExists = await productModel.find({}).populate('parentCategory');
 if(productsExists){
 
     console.log('found the products',productsExists);
