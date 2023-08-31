@@ -7,7 +7,7 @@ connect();
 export  async function GET(NextRequest){
 
 try{
-    const productsExists = await productModel.find({}).populate('parentCategory');
+    const productsExists = await productModel.find({});
 if(productsExists){
 
     console.log('found the products',productsExists);
@@ -23,6 +23,7 @@ if(productsExists){
     })
 }
 }catch(err){
+    console.log('ERROR FETCHING THE PRODUCTS IS : ',err);
     return NextResponse.json({
         status : 404,
         error : 'there was some error getting the details of the products',err

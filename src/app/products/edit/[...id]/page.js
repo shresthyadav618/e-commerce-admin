@@ -21,7 +21,7 @@ const response = await fetch('http://localhost:3000/api/products/getbyid',{
 
 if(response.ok){
     const responseBody = await response.json();
-    console.log('got the reponse',responseBody);
+    console.log('got the response',responseBody);
     changeProduct(()=>{return responseBody.product});
 }else{
     const responseError = await response.json();

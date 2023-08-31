@@ -30,7 +30,7 @@ export default function ProductForm({name,desc,price,check,_id,images,parentCate
         }
         getCategories();
     },[])
-
+    const [properties,setProperties] = useState({});
     const [data,changeData] = useState({
     name : name || "",
     desc : desc || "",
@@ -145,6 +145,16 @@ function updateImagesOrder(){
         return {...prev, images : arguments[0]}
     })
 }
+
+function handlePropertyChange(e , pname){
+    console.log(pname,e.target.value);
+    console.log('INSIDE HANDLING THE PROPERTY CHANGE');
+    setProperties((prev)=>{
+        return { pname : e.target.value}
+    });
+    console.log('PROPERTIES CHANGED',properties);
+}
+
 console.log('THE VALUE OF DATA.IMAGES' , data.images)
 return (<Common>
    <form className="flex flex-col w-[60%] gap-y-4">
@@ -160,7 +170,10 @@ return (<Common>
     return <option value={cat._id}>{cat.name}</option>
    })} </select>
    {propertyToFill && propertyToFill.map((elm)=>{
-    return <div className="flex gap-x-2 ml-2"> <div>{elm.name}</div> <div>{elm.value}</div> </div>
+        return <div className="flex gap-x-2  flex-col"> <label>{elm.name}</label> <select onChange={(e)=>{handlePropertyChange(e , elm.name)}}> <option>Please select</option> {elm && elm.value.map((v)=>{
+            console.log(v);
+            return <option value={v}>{v}</option>
+        })}  </select>  </div> 
    })}
    <label htmlFor="photos">Photos</label>
    <label className="ml-2 btn font-normal cursor-pointer flex flex-col items-center justify-center gap-y-2" > <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
