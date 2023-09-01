@@ -7,15 +7,16 @@ connect();
 export async function POST(NextRequest){
     try{
         const reqBody = await NextRequest.json();
-    const {name,desc,price,images,parentCategory} = reqBody;
+    const {name,desc,price,images,parentCategory,properties} = reqBody;
     console.log(name,desc,price,images);
-    
+    console.log('THE PROPERTIES ARE  : ',properties);
     const newProduct = await new productModel({
         name : name,
         desc : desc,
         price: price,
         images : images,
-        parentCategory : parentCategory === '' ? null : parentCategory
+        parentCategory : parentCategory === '' ? null : parentCategory,
+        properties : properties
     });
 
     const savedProduct = await newProduct.save();

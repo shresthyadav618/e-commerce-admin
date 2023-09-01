@@ -5,7 +5,7 @@ import { ReactSortable } from "react-sortablejs";
 import { PuffLoader } from "react-spinners";
 import Common from "../components/common";
 
-export default function ProductForm({name,desc,price,check,_id,images,parentCategory}){
+export default function ProductForm({name,desc,price,check,_id,images,parentCategory,properties}){
     console.log(name,desc,price,check,_id)
     const Router = useRouter();
     const [categories , setCategories] = useState(null);
@@ -30,7 +30,8 @@ export default function ProductForm({name,desc,price,check,_id,images,parentCate
         }
         getCategories();
     },[])
-    const [properties,setProperties] = useState({});
+    const [Properties,setProperties] = useState(properties || []);
+    console.log('INITIAL PROPERTIES ARE : ',properties)
     const [data,changeData] = useState({
     name : name || "",
     desc : desc || "",
@@ -48,7 +49,7 @@ async function handleSubmit(e){
         const response = await fetch('http://localhost:3000/api/products/edit',{
             headers : {'Content-Type' : 'application/json'},
             method : 'PUT',
-            body : JSON.stringify({...data,_id,ParentCategory})
+            body : JSON.stringify({...data,_id,ParentCategory,Properties})
         });
 
         if(response.ok){
@@ -63,7 +64,7 @@ async function handleSubmit(e){
     }else{
         const response = await fetch('http://localhost:3000/api/products/add',{
         headers : {'Content-Type':'application/json'},
-        body : JSON.stringify({...data , ParentCategory}),
+        body : JSON.stringify({...data , ParentCategory,Properties}),
         method : 'POST'
     });
    
@@ -102,6 +103,7 @@ if(ParentCategory && categories){
     }    
 }
 console.log('THE FINAL PROPERTY ARRAY IS : ',propertyToFill);
+console.log('THE TYPE OF ELM.VALUE IS : ', typeof(propertyToFill[0]?.value));
 async function uploadImages(e){
 setLoading(true);
 console.log(e);
@@ -145,14 +147,16 @@ function updateImagesOrder(){
         return {...prev, images : arguments[0]}
     })
 }
-
-function handlePropertyChange(e , pname){
+console.log(Properties);
+async function handlePropertyChange(e , pname){
+    
     console.log(pname,e.target.value);
+    
     console.log('INSIDE HANDLING THE PROPERTY CHANGE');
-    setProperties((prev)=>{
-        return { pname : e.target.value}
+    await setProperties((prev)=>{
+        return {...prev , [pname] : e.target.value}
     });
-    console.log('PROPERTIES CHANGED',properties);
+    console.log('PROPERTIES CHANGED',Properties);
 }
 
 console.log('THE VALUE OF DATA.IMAGES' , data.images)
@@ -164,16 +168,19 @@ return (<Common>
    
    <label>Category</label>
    <select onChange={(e)=>{
-    console.log('TRYING TO CHANGE PARENT CATEGORY',e.target.value)
+    console.log('TRYING TO CHANGE PARENT CATEGORY',e.target.value);
+    setProperties([]);
     setParentCategory(()=>{return e.target.value})
    }} value={ParentCategory}><option value={''}>Uncategorized</option> {categories && categories.map((cat)=>{
     return <option value={cat._id}>{cat.name}</option>
    })} </select>
-   {propertyToFill && propertyToFill.map((elm)=>{
-        return <div className="flex gap-x-2  flex-col"> <label>{elm.name}</label> <select onChange={(e)=>{handlePropertyChange(e , elm.name)}}> <option>Please select</option> {elm && elm.value.map((v)=>{
+   {propertyToFill  && propertyToFill.map((elm)=>{
+    console.log(elm);
+    console.log(typeof(elm.value))
+        return <div className="flex gap-x-2  flex-col"> <label>{elm.name}</label> <select onChange={(e)=>{handlePropertyChange(e , elm.name)}} value={Properties[elm.name]} > <option>Please select</option> {elm && Array.isArray(elm.value) ? elm.value.map((v)=>{
             console.log(v);
             return <option value={v}>{v}</option>
-        })}  </select>  </div> 
+        }) : <option value={elm.value}>{elm.value}</option> }  </select>  </div> 
    })}
    <label htmlFor="photos">Photos</label>
    <label className="ml-2 btn font-normal cursor-pointer flex flex-col items-center justify-center gap-y-2" > <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

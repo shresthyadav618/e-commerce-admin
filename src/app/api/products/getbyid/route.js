@@ -8,12 +8,13 @@ export async function POST(NextRequest){
         console.log(reqBody);
         const {_id} = reqBody;
         const product = await productModel.findById(_id);
-        // changed .populate('parentCategory')
+    
         
         if(product){
             console.log('found the product',product);
             console.log('TRYING TO POPULATE PARENT CATEGORY');
-            await product.populate('parentCategory');
+            
+            await product?.populate('parentCategory');
             console.log('AFTER POPULATING WITH PARENT CATEGORY' , product);
             return NextResponse.json({
                 status : 200,
@@ -27,7 +28,8 @@ export async function POST(NextRequest){
         }
 
     }catch(err){
-        console.log(err);
+        
+        console.log('the error is : : : : :: : : ',err);
         return NextResponse.json({
             status : 500,
             error : 'There was some error getting back the product'

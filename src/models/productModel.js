@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 import { connect } from "../dbConfig/dbConfig";
+
 connect();
 
 const productSchema = mongoose.Schema({
@@ -25,6 +26,10 @@ const productSchema = mongoose.Schema({
         type : mongoose.Types.ObjectId,
         required : false,
         ref : 'categories'
+    },
+    properties : {
+        type : Object,
+        required : false
     }
 
 });
