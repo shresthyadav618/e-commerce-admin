@@ -2,6 +2,8 @@
 import { categoriesModel } from "@/models/categories";
 import { connect } from "mongoose";
 import { NextResponse } from "next/server";
+import { isAdminCheck } from "../../auth/[...nextauth]/route";
+await isAdminCheck();
 export async function POST(NextRequest){
     try{
         connect()

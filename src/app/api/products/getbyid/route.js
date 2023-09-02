@@ -1,8 +1,10 @@
 
 import { productModel } from "@/models/productModel";
 import { NextResponse } from "next/server";
+import { isAdminCheck } from "../../auth/[...nextauth]/route";
+await isAdminCheck();
 export async function POST(NextRequest){
-
+   
     try{
         const reqBody = await NextRequest.json();
         console.log(reqBody);

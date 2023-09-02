@@ -4,6 +4,8 @@ import fs from "fs";
 import mime from "mime-types";
 import { NextResponse } from 'next/server';
 import { join } from 'path';
+import { isAdminCheck } from "../../auth/[...nextauth]/route";
+await isAdminCheck();
 export async function POST(NextRequest) {
   const form = new IncomingForm();
   form.uploadDir = './public/uploads'; // Set the directory to store uploads

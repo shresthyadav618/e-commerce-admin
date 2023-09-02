@@ -3,11 +3,18 @@ import { signIn, useSession } from "next-auth/react";
 // import { connect } from "../src/dbConfig/dbConfig";
 import Nav from "./Nav";
 export default function common({children}){
+
+
+  
+
   // connect();
     const {data: session , status} = useSession();
     console.log(session);
+    console.log('THE STATUS VALUE IS : ',status);
+    console.log(typeof(status));
     const userEmail = session?.user?.email;
-    
+    console.log('THE SESSION IS , PRESENT INSIDE THE COMMON FILE',session);
+    console.log('THE USER EMAIL IS , INSIDE THE COMMON FILE',userEmail);
     if(status ==="loading"){
       return  <p>Hang in there </p>
     }

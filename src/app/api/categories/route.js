@@ -1,6 +1,8 @@
 import { categoriesModel } from "@/models/categories";
 import { NextResponse } from "next/server";
 import { connect } from "../../../dbConfig/dbConfig";
+import { isAdminCheck } from "../../auth/[...nextauth]/route";
+await isAdminCheck();
 const handler = async(NextRequest)=>{
     console.log('the method is : ',NextRequest.method);
     connect();

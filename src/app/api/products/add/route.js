@@ -2,7 +2,9 @@
 import { productModel } from "@/models/productModel";
 import { NextResponse } from "next/server";
 import { connect } from "../../../../dbConfig/dbConfig";
+import { isAdminCheck } from "../../auth/[...nextauth]/route";
 connect();
+await isAdminCheck();
 
 export async function POST(NextRequest){
     try{
