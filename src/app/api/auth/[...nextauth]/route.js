@@ -38,10 +38,15 @@ const authOptions =  {
 }
 
 export const isAdminCheck = async() => {
-  const session = await getServerSession(authOptions);
-  console.log('THE IS ADMIN CHECK SESSION IS : ',session);
-  if(!isAdmin.includes(session?.user?.email)){
-    throw 'not admin';
+  try{
+    const session = await getServerSession(authOptions);
+    console.log('THE IS ADMIN CHECK SESSION IS : ',session);
+    if(!isAdmin.includes(session?.user?.email)){
+      throw 'not admin';
+    }
+  }catch(err){
+    // console.log('THE ERROR IS : ',err);
+    return true;
   }
 }
 

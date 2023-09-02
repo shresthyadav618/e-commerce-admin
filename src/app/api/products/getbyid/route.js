@@ -1,8 +1,12 @@
 
+import { connect } from "@/dbConfig/dbConfig";
+import { categoriesSchema } from "@/models/categories";
 import { productModel } from "@/models/productModel";
+import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import { isAdminCheck } from "../../auth/[...nextauth]/route";
 await isAdminCheck();
+await connect();
 export async function POST(NextRequest){
    
     try{
@@ -10,7 +14,7 @@ export async function POST(NextRequest){
         console.log(reqBody);
         const {_id} = reqBody;
         const product = await productModel.findById(_id);
-    
+        const x =  mongoose.models.categories || mongoose.model('categories',categoriesSchema) ;
         
         if(product){
             console.log('found the product',product);

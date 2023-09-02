@@ -1,7 +1,9 @@
+import { connect } from "@/dbConfig/dbConfig";
 import { productModel } from "@/models/productModel";
 import { NextResponse } from "next/server";
 import { isAdminCheck } from "../../auth/[...nextauth]/route";
 await isAdminCheck();
+await connect();
 export async function PUT(NextRequest){
     try{
         const reqBody = await NextRequest.json();

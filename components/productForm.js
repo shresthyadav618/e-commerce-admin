@@ -38,6 +38,12 @@ export default function ProductForm({name,desc,price,check,_id,images,parentCate
     price: price || "",
     images :  images || []
     }) ;
+
+    useEffect(()=>{
+        const filteredImages = data.images.filter((elm)=>{if(elm){return elm}});
+        changeData((prev)=>{return {...prev, images : filteredImages}});
+    },[])
+
     const [ParentCategory , setParentCategory] = useState(parentCategory?._id);
 console.log(data);
 const [loading,setLoading] = useState(false);
@@ -196,7 +202,8 @@ Upload
    </div>}
    <div className="uploaded__images">
    <ReactSortable list={data.images} setList={updateImagesOrder}>
-    {data.images.length>0 && data.images.map((imageContent)=>{
+    {data?.images?.length>0 && data?.images?.map((imageContent)=>{
+        if(imageContent)
         return  <img src={imageContent} width={'60px'} height={'60px'}></img> 
       })      }
     </ReactSortable>
