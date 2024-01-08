@@ -9,7 +9,7 @@ export default function useNav() {
     console.log(path)
   return (
     <aside>
-      <Link href={'/'} className={  path=='/'?defaultCss + activeLink: defaultCss}>
+      <Link href={'/'} className={  path=='/'?defaultCss + activeLink: defaultCss} >
         <svg
           xmlns="http://www.w3.org/2000/svg"   
           width={"20px"}
