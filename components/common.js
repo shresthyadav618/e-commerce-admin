@@ -2,7 +2,7 @@
 import { signIn, useSession } from "next-auth/react";
 // import { connect } from "../src/dbConfig/dbConfig";
 import Nav from "./Nav";
-export default function common({children}){
+export default function useCommon({children}){
 
 
   

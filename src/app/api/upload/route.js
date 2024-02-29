@@ -61,7 +61,7 @@ export async function POST(NextRequest) {
   }
 }
 
-export const config = {
+ const config = {
   api: {
     bodyParser: false,
   },

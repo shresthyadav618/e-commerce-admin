@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev ",
     "build": "next build",
-    "start": "next start",
+    "start": "next start --port 8080",
     "lint": "next lint"
   },
   "dependencies": {
@@ -20,11 +20,13 @@
     "multiparty": "^4.2.3",
     "next": "13.4.16",
     "next-auth": "^4.23.0",
+    "punycode": "^2.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-sortablejs": "^6.1.4",
     "react-spinners": "^0.13.8",
-    "sortablejs": "^1.15.0"
+    "sortablejs": "^1.15.0",
+    "userland": "^0.4.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.20",

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 // import { useRouter } from "next/router";
 import Common from "../../../../../components/common";
-export default function page(){
+export default function useDeleteId(){
     // const Router = useRouter();
     const pathname = usePathname().split('/')[3].toString();
     console.log('inside delete',pathname)

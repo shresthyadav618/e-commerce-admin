@@ -144,7 +144,7 @@ if(files?.length>0){
 
 }else{
     console.log('No file found')
-}
+} 
 setLoading(false);
 }
 function updateImagesOrder(){
@@ -178,14 +178,14 @@ return (<Common>
     setProperties([]);
     setParentCategory(()=>{return e.target.value})
    }} value={ParentCategory}><option value={''}>Uncategorized</option> {categories && categories.map((cat)=>{
-    return <option value={cat._id}>{cat.name}</option>
+    return <option key={cat._id} value={cat._id}>{cat.name}</option>
    })} </select>
    {propertyToFill  && propertyToFill.map((elm)=>{
     console.log(elm);
     console.log(typeof(elm.value))
-        return <div className="flex gap-x-2  flex-col"> <label>{elm.name}</label> <select onChange={(e)=>{handlePropertyChange(e , elm.name)}} value={Properties[elm.name]} > <option>Please select</option> {elm && Array.isArray(elm.value) ? elm.value.map((v)=>{
+        return <div key={elm.value} className="flex gap-x-2  flex-col"> <label>{elm.name}</label> <select onChange={(e)=>{handlePropertyChange(e , elm.name)}} value={Properties[elm.name]} > <option>Please select</option> {elm && Array.isArray(elm.value) ? elm.value.map((v)=>{
             console.log(v);
-            return <option value={v}>{v}</option>
+            return <option key={v} value={v}>{v}</option>
         }) : <option value={elm.value}>{elm.value}</option> }  </select>  </div> 
    })}
    <label htmlFor="photos">Photos</label>
@@ -204,7 +204,7 @@ Upload
    <ReactSortable list={data.images} setList={updateImagesOrder}>
     {data?.images?.length>0 && data?.images?.map((imageContent)=>{
         if(imageContent)
-        return  <img src={imageContent} width={'60px'} height={'60px'}></img> 
+        return  <img key={imageContent} src={imageContent} width={'60px'} height={'60px'}></img> 
       })      }
     </ReactSortable>
     </div>

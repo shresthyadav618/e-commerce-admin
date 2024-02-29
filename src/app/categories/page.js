@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import Common from "../../../components/common";
-export default function page(){
+export default function useCategories(){
 
 const [name,setName] = useState(null);
 const [editing,setEditing] = useState(null);
@@ -174,7 +174,7 @@ return (
         }}>
             <option value={''} >Parent Category</option>
             {categories && categories.map((cat)=>{
-                return <option value={cat._id}>{cat.name}</option>
+                return <option key={cat._id + 'a'} value={cat._id}>{cat.name}</option>
             })}
         </select>
         </div>
@@ -207,7 +207,7 @@ return (
             
         </thead>
         {categories && categories.map((cat)=>{
-            return <tr><td>{cat.name}</td> <td>{cat?.parent?.name}</td> <td><button onClick={()=>{
+            return <tr key={cat.name}><td>{cat.name}</td> <td>{cat?.parent?.name}</td> <td><button onClick={()=>{
                 handleEdit(cat);
             }}>Edit</button> <button onClick={()=>{
                 handleDelete(cat)

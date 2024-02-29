@@ -7,7 +7,7 @@ import clientPromise from "../../../../../lib/mongoAdapter"
 // const {data:session} = useSession();
 // console.log('THE SESSION OBJECT INSIDE AUTH ROUTE',session);
 
-const isAdmin = ['manushresth.official24669@gmail.com'];
+const isAdmin = ['manushresth.official24669@gmail.com' , 'shresthm727@gmail.com' , 'shubhamyadav.manu@gmail.com'];
 const authOptions =  {
   providers: [
     GoogleProvider({

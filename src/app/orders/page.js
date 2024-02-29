@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Common from "../../../components/common";
 
-export default function page(){
+export default function useOrders(){
     const [orders, setOrders] = useState([]);
     useEffect(()=>{
        async function getOrders(){

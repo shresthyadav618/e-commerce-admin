@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import ProductForm from "../../../../../components/productForm";
 
-export default function page(){
+export default function useEditId(){
 const pathname = usePathname().split('/')[3].toString();
 const [product,changeProduct] = useState(null);
 console.log(product);
