@@ -9,7 +9,8 @@ export default function ProductForm({name,desc,price,check,_id,images,parentCate
     console.log(name,desc,price,check,_id)
     const Router = useRouter();
     const [categories , setCategories] = useState(null);
-    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+    // const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+    const BASE_URL = "https://e-commerce-admin-eight-mocha.vercel.app";
     useEffect(()=>{
         async function getCategories(){
             const data  = await fetch(BASE_URL + '/api/categories',{

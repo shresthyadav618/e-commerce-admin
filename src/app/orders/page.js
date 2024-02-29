@@ -4,7 +4,8 @@ import Common from "../../../components/common";
 
 export default function useOrders(){
     const [orders, setOrders] = useState([]);
-    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+    // const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+    const BASE_URL = "https://e-commerce-admin-eight-mocha.vercel.app";
     useEffect(()=>{
        async function getOrders(){
         const response = await fetch(BASE_URL + '/api/orders',{

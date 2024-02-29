@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Common from "../../../../../components/common";
 export default function useDeleteId(){
     // const Router = useRouter();
-    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+    const BASE_URL = "https://e-commerce-admin-eight-mocha.vercel.app";
     const pathname = usePathname().split('/')[3].toString();
     console.log('inside delete',pathname)
     async function handleDelete(){

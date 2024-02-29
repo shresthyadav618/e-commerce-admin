@@ -4,7 +4,8 @@ import { signIn, useSession } from "next-auth/react";
 import Nav from "./Nav";
 export default function useCommon({children}){
 
- const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+//  const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+const BASE_URL = "https://e-commerce-admin-eight-mocha.vercel.app";
   
 
   // connect();

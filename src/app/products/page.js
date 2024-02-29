@@ -7,7 +7,9 @@ export default function useProducts(){
 console.log('inside products')
 const [products, changeProducts] = useState(null);
 console.log(products);
-const BASE_URL = process.env.BASE_URL;
+// const BASE_URL = process.env.BASE_URL;
+const BASE_URL = "https://e-commerce-admin-eight-mocha.vercel.app";
+console.log('BASE_URL: ' + BASE_URL);
 useEffect(()=>{
 async function getProducts(){
 console.log('inside the get products function')

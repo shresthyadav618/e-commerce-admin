@@ -8,7 +8,7 @@ const pathname = usePathname().split('/')[3].toString();
 const [product,changeProduct] = useState(null);
 console.log(product);
 
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+const BASE_URL = "https://e-commerce-admin-eight-mocha.vercel.app";
 
 useEffect(()=>{
 
