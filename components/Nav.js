@@ -1,6 +1,6 @@
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname  } from "next/navigation";
 export default function useNav() {
     const activeLink = 'bg-white text-blue-900 pr-0 ';
     const defaultCss = 'flex p-4 '
@@ -9,7 +9,7 @@ export default function useNav() {
     console.log(path)
   return (
     <aside>
-      <Link href={'/'} className={  path=='/'?defaultCss + activeLink: defaultCss}>
+      <Link href={'/'} className={  path=='/'?defaultCss + activeLink: defaultCss} >
         <svg
           xmlns="http://www.w3.org/2000/svg"   
           width={"20px"}
