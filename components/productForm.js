@@ -9,10 +9,10 @@ export default function ProductForm({name,desc,price,check,_id,images,parentCate
     console.log(name,desc,price,check,_id)
     const Router = useRouter();
     const [categories , setCategories] = useState(null);
-
+    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
     useEffect(()=>{
         async function getCategories(){
-            const data  = await fetch('http://localhost:3000/api/categories',{
+            const data  = await fetch(BASE_URL + '/api/categories',{
             method : 'GET'
         });
 
@@ -52,7 +52,7 @@ async function handleSubmit(e){
     console.log(data);
 
     if(check){
-        const response = await fetch('http://localhost:3000/api/products/edit',{
+        const response = await fetch( BASE_URL + '/api/products/edit',{
             headers : {'Content-Type' : 'application/json'},
             method : 'PUT',
             body : JSON.stringify({...data,_id,ParentCategory,Properties})
@@ -68,7 +68,7 @@ async function handleSubmit(e){
             console.log('unable to edit the product',responseError);
         }
     }else{
-        const response = await fetch('http://localhost:3000/api/products/add',{
+        const response = await fetch(BASE_URL + '/api/products/add',{
         headers : {'Content-Type':'application/json'},
         body : JSON.stringify({...data , ParentCategory,Properties}),
         method : 'POST'
@@ -120,7 +120,7 @@ if(files?.length>0){
  for(const file of files){
     dataForm.append('file',file);
  }
- const response = await fetch('http://localhost:3000/api/upload',{
+ const response = await fetch(BASE_URL + '/api/upload',{
     method : 'POST',
     body : dataForm
  });

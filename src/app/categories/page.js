@@ -8,9 +8,10 @@ const [editing,setEditing] = useState(null);
 const [parentCategory , setParentCategory] = useState('');
 const [categories,setCategories] = useState(null);
 const [render,changeRender] = useState(false);
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 useEffect(()=>{
     async function getCategories(){
-        const data  = await fetch('http://localhost:3000/api/categories',{
+        const data  = await fetch(BASE_URL + '/api/categories',{
             method : 'GET'
         });
 
@@ -36,7 +37,7 @@ async function handleSave(e){
 e.preventDefault();
 console.log(name);
 
-const data = await fetch('http://localhost:3000/api/categories',{
+const data = await fetch( BASE_URL + '/api/categories',{
     method : 'POST',
     headers : {'Content-Type': 'application/json'},
     body : JSON.stringify({name : name , parentCategory , properties})
@@ -75,7 +76,7 @@ async function handleEdit(cat){
 
 async function handleEditSubmit(e){
     e.preventDefault();
-    const data = await fetch('http://localhost:3000/api/categories',{
+    const data = await fetch(BASE_URL + '/api/categories',{
         method : 'PUT',
         body : JSON.stringify({_id : editing._id , name , parentCategory, properties : properties.map((p)=>{
             return {
@@ -103,7 +104,7 @@ async function handleEditSubmit(e){
 
 async function handleDelete(cat){
     console.log('inside the delete function',cat._id);
-    const response = await fetch('http://localhost:3000/api/categories/delete',{
+    const response = await fetch(BASE_URL + '/api/categories/delete',{
         method : 'POST',
         headers : {'Content-Type' : 'application/json'},
         body : JSON.stringify({_id : cat._id})

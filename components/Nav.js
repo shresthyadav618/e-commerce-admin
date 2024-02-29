@@ -1,6 +1,6 @@
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { usePathname  } from "next/navigation";
+import { usePathname } from "next/navigation";
 export default function useNav() {
     const activeLink = 'bg-white text-blue-900 pr-0 ';
     const defaultCss = 'flex p-4 '

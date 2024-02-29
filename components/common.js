@@ -4,7 +4,7 @@ import { signIn, useSession } from "next-auth/react";
 import Nav from "./Nav";
 export default function useCommon({children}){
 
-
+ const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
   
 
   // connect();

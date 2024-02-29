@@ -8,12 +8,12 @@ const pathname = usePathname().split('/')[3].toString();
 const [product,changeProduct] = useState(null);
 console.log(product);
 
-
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 
 useEffect(()=>{
 
 async function getProduct(){
-const response = await fetch('http://localhost:3000/api/products/getbyid',{
+const response = await fetch(BASE_URL + '/api/products/getbyid',{
     method : 'POST',
     headers : {'Content-Type' : 'application/json'},
     body : JSON.stringify({_id : pathname})

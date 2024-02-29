@@ -5,10 +5,11 @@ import { usePathname } from "next/navigation";
 import Common from "../../../../../components/common";
 export default function useDeleteId(){
     // const Router = useRouter();
+    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
     const pathname = usePathname().split('/')[3].toString();
     console.log('inside delete',pathname)
     async function handleDelete(){
-        const response = await fetch('http://localhost:3000/api/products/delete',{
+        const response = await fetch(BASE_URL + '/api/products/delete',{
             method : 'POST',
             body : JSON.stringify({_id : pathname}),
             headers : {'Content-Type':'application/json'}

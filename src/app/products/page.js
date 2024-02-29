@@ -7,10 +7,11 @@ export default function useProducts(){
 console.log('inside products')
 const [products, changeProducts] = useState(null);
 console.log(products);
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 useEffect(()=>{
 async function getProducts(){
 console.log('inside the get products function')
-const response = await fetch('http://localhost:3000/api/products',{
+const response = await fetch(BASE_URL + '/api/products',{
     method : 'GET'
 });
 
