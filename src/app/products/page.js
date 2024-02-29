@@ -7,7 +7,7 @@ export default function useProducts(){
 console.log('inside products')
 const [products, changeProducts] = useState(null);
 console.log(products);
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+const BASE_URL = process.env.BASE_URL;
 useEffect(()=>{
 async function getProducts(){
 console.log('inside the get products function')
